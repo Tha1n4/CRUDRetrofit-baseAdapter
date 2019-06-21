@@ -10,7 +10,7 @@ public class RetrofitInicializador {
 
     public RetrofitInicializador(){
         retrofit = new Retrofit.Builder()
-                .baseUrl("br.com.senai.senai_appMobile")
+                .baseUrl("http://localhost:8080/")
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build();
     }

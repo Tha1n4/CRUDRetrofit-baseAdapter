@@ -14,9 +14,13 @@ import java.util.Arrays;
 import java.util.List;
 
 import br.com.senai.senai_appmobile.R;
+import br.com.senai.senai_appmobile.consumer.RetrofitInicializador;
 import br.com.senai.senai_appmobile.dao.PedidoDAO;
 import br.com.senai.senai_appmobile.model.AdapterPedidoPersonalizado;
 import br.com.senai.senai_appmobile.model.Pedido;
+import br.com.senai.senai_appmobile.services.PedidoService;
+import retrofit2.Retrofit;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class ListaPedidosActivity extends AppCompatActivity {
 
@@ -40,6 +44,27 @@ public class ListaPedidosActivity extends AppCompatActivity {
         AdapterPedidoPersonalizado adapter = new AdapterPedidoPersonalizado(pedidos, this);
         listaPedidos.setAdapter(adapter);
 
+
+        PedidoService pedidoService = new RetrofitInicializador().getPedidoService();
+
+        for (Pedido ped : pedidos) {
+            pedidoService.insere(ped);
+        }
+
+
+        for (Pedido ped : pedidos) {
+            pedidoService.restore(ped);
+        }
+
+
+        for (Pedido ped : pedidos) {
+            pedidoService.find(ped);
+        }
+
+
+        for (Pedido ped : pedidos) {
+            pedidoService.delete(ped);
+        }
     }
 
     private void configuraFabNovoPedido() {
@@ -72,6 +97,7 @@ public class ListaPedidosActivity extends AppCompatActivity {
         listaPedidos.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dao.allPedidos()));
     }
 
+    //Para teste
     private List<Pedido> todosPedidos() {
         return new ArrayList<>(Arrays.asList(
                 new Pedido("Thaina", "20/06/2019", "11.99"),
